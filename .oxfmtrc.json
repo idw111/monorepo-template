@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 160,
+  "sortImports": true,
+  "ignorePatterns": [
+    "**/.next/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/node_modules/**"
+  ]
+}

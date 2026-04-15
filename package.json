@@ -1,0 +1,22 @@
+{
+  "name": "monorepo-template",
+  "private": true,
+  "workspaces": [
+    "api",
+    "www"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "oxfmt --write api www",
+    "format:check": "oxfmt --check api www",
+    "dev:api": "npm run dev --workspace api",
+    "dev:www": "npm run dev --workspace www"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.45.0"
+  }
+}

@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+
+  --color-canvas: #f4efe5;
+  --color-panel: #fffdf9;
+  --color-panel-strong: #f4ecde;
+  --color-ink: #1a1c1a;
+  --color-muted: #5e5b55;
+  --color-accent: #0f766e;
+  --color-accent-strong: #115e59;
+  --color-accent-soft: #d9f3ee;
+  --color-border: #d9d0c3;
+  --color-success: #166534;
+  --color-danger: #b42318;
+  --shadow-panel: 0 28px 80px rgba(50, 42, 30, 0.14);
+  --shadow-float: 0 14px 30px rgba(15, 118, 110, 0.18);
+  --animate-rise-in: rise-in 0.6s ease-out both;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+      radial-gradient(circle at right 10%, rgba(180, 83, 9, 0.12), transparent 24%), linear-gradient(180deg, #f9f3ea 0%, #f4efe5 100%);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(15, 118, 110, 0.16);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

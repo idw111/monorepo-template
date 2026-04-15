@@ -1,0 +1,78 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config dist/index.js",
+    "build": "swc src -d dist --strip-leading-paths",
+    "dev": "node --watch -r @swc-node/register -r dotenv/config --trace-warnings src/index.ts",
+    "lint": "npm run eslint",
+    "eslint": "eslint . --ext .ts",
+    "format": "npm exec -- oxfmt --write src script eslint.config.js",
+    "format:check": "npm exec -- oxfmt --check src script eslint.config.js",
+    "prepare": "husky install",
+    "docker:start": "docker-compose -f ./docker.yml up",
+    "docker:stop": "docker-compose -f ./docker.yml down",
+    "docker:restart": "npm run docker:stop && npm run docker:start",
+    "script": "node -r @swc-node/register -r dotenv/config --trace-warnings",
+    "sync": "npm run script ./script/sync.ts",
+    "test": "mocha \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "argon2": "^0.43.0",
+    "axios": "^1.9.0",
+    "compression": "^1.8.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "formidable": "^3.5.4",
+    "generate-password": "^1.7.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@swc-node/register": "^1.11.1",
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.13.5",
+    "@types/compression": "^1.8.0",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/formidable": "^3.4.5",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mocha": "^10.0.10",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.30",
+    "@types/validator": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.28.0",
+    "husky": "^9.1.7",
+    "mocha": "^11.5.0",
+    "should": "^13.2.3",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "glob": "^9.0.0"
+  },
+  "mocha": {
+    "bail": true,
+    "exit": true,
+    "require": [
+      "@swc-node/register",
+      "dotenv/config"
+    ]
+  }
+}
