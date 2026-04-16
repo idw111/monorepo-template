@@ -15,9 +15,6 @@
     "format": "npm exec -- oxfmt --write src script eslint.config.js",
     "format:check": "npm exec -- oxfmt --check src script eslint.config.js",
     "prepare": "husky install",
-    "docker:start": "docker-compose -f ./docker.yml up",
-    "docker:stop": "docker-compose -f ./docker.yml down",
-    "docker:restart": "npm run docker:stop && npm run docker:start",
     "script": "node -r @swc-node/register -r dotenv/config --trace-warnings",
     "sync": "npm run script ./script/sync.ts",
     "test": "mocha \"src/**/*.test.ts\""
