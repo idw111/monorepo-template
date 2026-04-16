@@ -4,7 +4,6 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import logger from 'morgan';
-
 import envvars from '@/configs/envvars';
 import routes from '@/routes';
 import { handleNotFound, handleRenderError, handleReportError } from '@/utils/error';

@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, startTransition, useContext, useEffect, useState } from 'react';
-
 import { fetchCurrentUser, type SessionUser } from '@/lib/api/auth';
 import { fetchServerStatus } from '@/lib/api/status';
 import { publicEnv } from '@/lib/env';

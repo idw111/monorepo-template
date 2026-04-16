@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { IBM_Plex_Sans_KR, Space_Grotesk } from 'next/font/google';
 import type { ReactNode } from 'react';
-
 import { AppProvider } from '@/contexts/app-context';
-
 import './globals.css';
 
 const bodyFont = IBM_Plex_Sans_KR({

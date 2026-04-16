@@ -1,5 +1,4 @@
 import { CountOptions, FindOptions } from 'sequelize';
-
 import { User } from '@/database/mysql/models/User';
 
 export const countUsers = async (options: CountOptions): Promise<number> => {

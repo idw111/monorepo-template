@@ -1,5 +1,4 @@
 import http from 'http';
-
 import app from '@/configs/app';
 import envvars from '@/configs/envvars';
 import { connect } from '@/database/mysql';

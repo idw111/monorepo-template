@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { publicEnv } from '@/lib/env';
 
 export const apiClient = axios.create({

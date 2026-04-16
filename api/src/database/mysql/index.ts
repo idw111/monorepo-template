@@ -1,9 +1,6 @@
 import path from 'path';
-
 import { Sequelize } from 'sequelize-typescript';
-
 import envvars from '@/configs/envvars';
-
 import { loadModels } from '../loader';
 
 let sequelize: Sequelize = null;
@@ -20,8 +17,15 @@ export const connect = async (): Promise<Sequelize> => {
     models,
     timezone: '+09:00',
   });
-  console.log('- mysql connected...', `mysql://${envvars.mysqlHost}:${envvars.mysqlPort}`);
-  return sequelize;
+
+  try {
+    await sequelize.authenticate();
+    console.log('- mysql connected...', `mysql://${envvars.mysqlHost}:${envvars.mysqlPort}`);
+    return sequelize;
+  } catch (err) {
+    console.error('- failed to connect to mysql...');
+    throw err;
+  }
 };
 
 export const getSequelize = (): Sequelize => sequelize;

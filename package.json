@@ -10,6 +10,7 @@
     "lint": "npm run lint --workspaces --if-present",
     "format": "oxfmt --write api www",
     "format:check": "oxfmt --check api www",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:www\"",
     "dev:api": "npm run dev --workspace api",
     "dev:www": "npm run dev --workspace www"
   },
@@ -17,6 +18,7 @@
     "node": ">=22.0.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "oxfmt": "^0.45.0"
   }
 }

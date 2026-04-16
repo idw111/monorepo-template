@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { check, ValidationChain, ValidationError, validationResult } from 'express-validator';
-
 import { UserRole } from '@/database/mysql/models/User';
 import { throwHttpError } from '@/utils/error';
 

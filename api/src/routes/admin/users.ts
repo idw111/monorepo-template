@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { countUsers, getUsers } from '@/services/users';
 import { getPaging } from '@/utils/paging';
 import { validateRoles } from '@/utils/validators';

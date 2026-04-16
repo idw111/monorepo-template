@@ -2,7 +2,6 @@ import { hash, verify } from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import ms from 'ms';
-
 import envvars from '@/configs/envvars';
 import { User, UserRole } from '@/database/mysql/models/User';
 import { throwHttpError } from '@/utils/error';

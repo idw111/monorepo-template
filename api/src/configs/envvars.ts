@@ -17,12 +17,6 @@ const envvars = {
   mysqlDatabase: process.env.MYSQL_DATABASE,
   mysqlHost: process.env.MYSQL_HOST,
   mysqlPort: Number(process.env.MYSQL_PORT),
-
-  // ncloud
-  ncloudAccessKey: process.env.NCLOUD_ACCESS_KEY,
-  ncloudAccessSecret: process.env.NCLOUD_ACCESS_SECRET,
-  ncloudServiceId: process.env.NCLOUD_SERVICE_ID,
-  kakaoChannel: process.env.KAKAO_CHANNEL,
 };
 
 export default envvars;

@@ -5,11 +5,8 @@
   "semi": true,
   "singleQuote": true,
   "printWidth": 160,
-  "sortImports": true,
-  "ignorePatterns": [
-    "**/.next/**",
-    "**/dist/**",
-    "**/coverage/**",
-    "**/node_modules/**"
-  ]
+  "sortImports": {
+    "newlinesBetween": false
+  },
+  "ignorePatterns": ["**/.next/**", "**/dist/**", "**/coverage/**", "**/node_modules/**"]
 }

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { authenticate, clearTokenCookie, parseJwt, setTokenCookie, signupUser } from '@/services/auth';
 import { validateText } from '@/utils/validators';
 
