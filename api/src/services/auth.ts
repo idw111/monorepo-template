@@ -87,6 +87,7 @@ export const setTokenCookie = (res: Response, token: string): void => {
     maxAge: getSeconds(envvars.jwtExpire) * 1000,
     secure,
     httpOnly,
+    sameSite: 'lax',
     domain: envvars.domain,
   });
 };
