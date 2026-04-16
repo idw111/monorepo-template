@@ -7,14 +7,14 @@ import { User, UserRole } from '@/database/mysql/models/User';
 import { throwHttpError } from '@/utils/error';
 import { getSeconds } from '@/utils/time';
 
-export interface UserPayload {
+export interface AuthUser {
   id: number;
   email: string;
   role: UserRole;
   nickname: string;
 }
 
-export const extractUserPayload = (user: User): UserPayload => {
+export const extractAuthUser = (user: User): AuthUser => {
   return {
     id: user.id,
     email: user.email,
@@ -30,7 +30,7 @@ export const extractAuthToken = (req: Request) => {
 export const parseJwt = async (req: Request, res: Response, next: NextFunction) => {
   const token = extractAuthToken(req);
   try {
-    res.locals.user = jwt.verify(token, envvars.jwtSecret) as UserPayload;
+    res.locals.user = jwt.verify(token, envvars.jwtSecret) as AuthUser;
   } catch {
     res.locals.user = null;
   }
@@ -47,7 +47,7 @@ export const hashPassword = async (password: string): Promise<string> => {
   return hashed;
 };
 
-export const generateToken = (user: UserPayload): string =>
+export const generateToken = (user: AuthUser): string =>
   jwt.sign(user, envvars.jwtSecret, {
     expiresIn: envvars.jwtExpire as ms.StringValue,
     issuer: envvars.jwtIssuer,
@@ -60,7 +60,7 @@ export const authenticate = async (email: string, password: string): Promise<{ u
   const isValidPassword = await validatePassword(password, user.password);
   if (!isValidPassword) throwHttpError('Invalid email or password', 'Auth', 401);
 
-  const token = generateToken(extractUserPayload(user));
+  const token = generateToken(extractAuthUser(user));
   return { user: user.toJSON(), token };
 };
 
@@ -76,7 +76,7 @@ export const signupUser = async (
   const hashed = await hashPassword(password);
   const user = await User.create({ email, password: hashed, nickname, role });
 
-  const token = generateToken(extractUserPayload(user));
+  const token = generateToken(extractAuthUser(user));
   return { user: user.toJSON(), token };
 };
 
