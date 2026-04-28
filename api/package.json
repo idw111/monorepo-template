@@ -36,7 +36,9 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.14.1",
     "sequelize": "^6.37.7",
-    "sequelize-typescript": "^2.1.6"
+    "sequelize-typescript": "^2.1.6",
+    "uuid": "^14.0.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -60,9 +62,6 @@
     "mocha": "^11.5.0",
     "should": "^13.2.3",
     "typescript": "^5.9.3"
-  },
-  "overrides": {
-    "glob": "^9.0.0"
   },
   "mocha": {
     "bail": true,
