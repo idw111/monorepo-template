@@ -75,10 +75,29 @@ Axios instance with `withCredentials: true` pointed at `envvars.api()`. All API 
 1. **Page file** — create `app/<route>/page.tsx` as a thin wrapper:
 
 ```tsx
+// client component
+'use client';
+
 import { SomePage } from '@/components/pages/SomePage';
-export default function Page() {
+import { FC } from 'react';
+
+const Page: FC = () => {
   return <SomePage />;
-}
+};
+
+export default Page;
+```
+
+```tsx
+// server component
+import { SomePage } from '@/components/pages/SomePage';
+
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  return <SomePage id={id} />;
+};
+
+export default Page;
 ```
 
 2. **Feature component** — create `components/pages/SomePage.tsx` with `'use client'` if needed. Put all UI logic here.
@@ -93,10 +112,10 @@ import { apiClient } from '@/lib/api/client';
 
 export type Post = { id: number; title: string };
 
-export async function fetchPosts() {
-  const res = await apiClient.get<{ posts: Post[] }>('/posts');
+export const fetchPosts = async () => {
+  const res = await apiClient.get<{ posts: Post[] }>(envvars.api('/posts'));
   return res.data.posts;
-}
+};
 ```
 
 ## 6. Verification Checklist
