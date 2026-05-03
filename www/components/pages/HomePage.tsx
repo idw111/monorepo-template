@@ -1,6 +1,8 @@
 'use client';
 
+import { FC } from 'react';
 import { useAppContext } from '@/contexts/app-context';
+import { envvars } from '@/lib/envvars';
 
 const setupItems = [
   'api/.env 와 www/.env.local 값을 맞춥니다.',
@@ -8,24 +10,24 @@ const setupItems = [
   'components, contexts, lib/api 아래에 기능을 이어붙입니다.',
 ];
 
-function getStatusTone(status: 'idle' | 'loading' | 'ready' | 'error') {
+const getStatusTone = (status: 'idle' | 'loading' | 'ready' | 'error') => {
   if (status === 'ready') return 'bg-success/10 text-success';
   if (status === 'error') return 'bg-danger/10 text-danger';
   if (status === 'loading') return 'bg-accent/10 text-accent';
   return 'bg-muted/10 text-muted';
-}
+};
 
-function formatTimestamp(value: string | null) {
+const formatTimestamp = (value: string | null) => {
   if (!value) return '아직 확인되지 않음';
 
   return new Intl.DateTimeFormat('ko-KR', {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value));
-}
+};
 
-export function HomePage() {
-  const { apiBaseUrl, isRefreshing, refreshBootData, serverStatus, session } = useAppContext();
+export const HomePage: FC = () => {
+  const { isRefreshing, refreshBootData, serverStatus, session } = useAppContext();
 
   return (
     <main className="min-h-screen bg-canvas px-5 py-8 text-ink">
@@ -52,7 +54,7 @@ export function HomePage() {
             <dl className="mt-5 grid gap-3 text-sm">
               <div>
                 <dt className="text-muted">Endpoint</dt>
-                <dd className="mt-1 break-all font-medium text-ink">{apiBaseUrl ?? 'NEXT_PUBLIC_API_BASE_URL 미설정'}</dd>
+                <dd className="mt-1 break-all font-medium text-ink">{envvars.api() ?? 'NEXT_PUBLIC_API_URL 미설정'}</dd>
               </div>
               <div>
                 <dt className="text-muted">Checked</dt>
@@ -112,4 +114,4 @@ export function HomePage() {
       </div>
     </main>
   );
-}
+};

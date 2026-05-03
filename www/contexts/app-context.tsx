@@ -3,7 +3,7 @@
 import { createContext, startTransition, useContext, useEffect, useState } from 'react';
 import { fetchCurrentUser, type SessionUser } from '@/lib/api/auth';
 import { fetchServerStatus } from '@/lib/api/status';
-import { publicEnv } from '@/lib/env';
+import { envvars } from '@/lib/envvars';
 
 type StatusKind = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -21,7 +21,6 @@ type SessionState = {
 };
 
 type AppContextValue = {
-  apiBaseUrl: string | null;
   isRefreshing: boolean;
   refreshBootData: () => Promise<void>;
   serverStatus: ServerStatusState;
@@ -54,11 +53,11 @@ export function AppProvider({ children }: AppProviderProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   async function refreshBootData() {
-    if (!publicEnv.apiBaseUrl) {
+    if (!envvars.api()) {
       startTransition(() => {
         setServerStatus({
           checkedAt: new Date().toISOString(),
-          description: 'NEXT_PUBLIC_API_BASE_URL 이 설정되지 않아 API 요청을 보내지 않았습니다.',
+          description: 'NEXT_PUBLIC_API_URL 이 설정되지 않아 API 요청을 보내지 않았습니다.',
           label: '환경변수 필요',
           status: 'error',
         });
@@ -150,7 +149,6 @@ export function AppProvider({ children }: AppProviderProps) {
   return (
     <AppContext.Provider
       value={{
-        apiBaseUrl: publicEnv.apiBaseUrl,
         isRefreshing,
         refreshBootData,
         serverStatus,
