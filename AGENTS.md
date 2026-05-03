@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI Agents when working with code in this repository.
 
 > Each app has its own detailed guide — read the relevant README before making changes:
 >
@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Structure
 
-Two independent apps sharing a root `node_modules` (hoisted via root `package.json`):
+A backend and a front-end apps sharing a root `node_modules` (hoisted via root `package.json`):
 
 - `api/` — Express 5 + TypeScript REST API (runs on port 5001)
 - `www/` — Next.js 16 + React 19 + Tailwind CSS 4 frontend (runs on port 3001)
