@@ -47,12 +47,12 @@ const initialSessionState: SessionState = {
   user: null,
 };
 
-export function AppProvider({ children }: AppProviderProps) {
+export const AppProvider = ({ children }: AppProviderProps) => {
   const [serverStatus, setServerStatus] = useState(initialServerStatus);
   const [session, setSession] = useState(initialSessionState);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  async function refreshBootData() {
+  const refreshBootData = async () => {
     if (!envvars.api()) {
       startTransition(() => {
         setServerStatus({
@@ -124,9 +124,9 @@ export function AppProvider({ children }: AppProviderProps) {
     });
 
     setIsRefreshing(false);
-  }
+  };
 
-  function setSessionUser(user: SessionUser) {
+  const setSessionUser = (user: SessionUser) => {
     startTransition(() => {
       setSession({
         label: user ? '로그인됨' : '게스트',
@@ -134,7 +134,7 @@ export function AppProvider({ children }: AppProviderProps) {
         user,
       });
     });
-  }
+  };
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -159,9 +159,9 @@ export function AppProvider({ children }: AppProviderProps) {
       {children}
     </AppContext.Provider>
   );
-}
+};
 
-export function useAppContext() {
+export const useAppContext = () => {
   const context = useContext(AppContext);
 
   if (!context) {
@@ -169,4 +169,4 @@ export function useAppContext() {
   }
 
   return context;
-}
+};

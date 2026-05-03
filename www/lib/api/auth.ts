@@ -11,7 +11,7 @@ type CurrentUserResponse = {
   user: SessionUser;
 };
 
-export async function fetchCurrentUser() {
+export const fetchCurrentUser = async () => {
   const response = await apiClient.get<CurrentUserResponse>('/auth');
   return response.data.user;
-}
+};

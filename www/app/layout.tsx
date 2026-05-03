@@ -27,7 +27,7 @@ type RootLayoutProps = Readonly<{
   children: ReactNode;
 }>;
 
-export default function RootLayout({ children }: RootLayoutProps) {
+const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="ko">
       <body className={`${bodyFont.variable} ${displayFont.variable} min-h-screen bg-canvas font-sans text-ink`}>
@@ -35,4 +35,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
