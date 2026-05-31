@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getSequelize } from '@/database/mysql';
-import admin from '@/routes/admin';
-import auth from '@/routes/auth';
+import admin from '@/routes/v1/admin';
+import auth from '@/routes/v1/auth';
 import { parseJwt } from '@/services/auth';
 
 const router = Router();

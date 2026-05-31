@@ -1,5 +1,6 @@
 import { readdir } from 'fs/promises';
 import path from 'path';
+import { logger } from '@/utils/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loadModels = async (modelsDir: string): Promise<any[]> => {
@@ -23,12 +24,12 @@ export const loadModels = async (modelsDir: string): Promise<any[]> => {
 
           if (!model) {
             const exports = Object.keys(module);
-            console.warn(`Model not found in ${file}. Available exports: ${exports.join(', ')}`);
+            logger().warn('Model not found in %s. Available exports: %s', file, exports.join(', '));
           }
 
           return model;
         } catch (err) {
-          console.error(`Error loading model from ${file}:`, err);
+          logger().error(err, 'Error loading model from %s', file);
           throw err;
         }
       })
@@ -36,7 +37,7 @@ export const loadModels = async (modelsDir: string): Promise<any[]> => {
 
     return models.filter(Boolean);
   } catch (err) {
-    console.error(`Error loading models from ${modelsDir}:`, err);
+    logger().error(err, 'Error loading models from %s', modelsDir);
     throw err;
   }
 };

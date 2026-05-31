@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { logger } from '@/utils/logger';
 
 type ErrorStatusCode = 400 | 401 | 403 | 404 | 500;
 
@@ -22,7 +23,7 @@ export const handleNotFound = (req: Request, res: Response, next: NextFunction):
 
 export const handleReportError = (err: Error, req: Request, res: Response, next: NextFunction): void => {
   // report err to somewhere (slack)
-  console.error(err);
+  logger().error(err, 'unhandled error');
   return next(err);
 };
 

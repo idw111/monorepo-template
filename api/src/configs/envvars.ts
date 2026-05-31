@@ -13,15 +13,16 @@ const envSchema = z.object({
 
   // jwt
   JWT_ISSUER: requiredString,
-  JWT_SECRET: requiredString,
+  JWT_SECRET: z.string().trim().length(64),
   JWT_EXPIRE: requiredString,
 
   // mysql
   MYSQL_USERNAME: requiredString,
-  MYSQL_PASSWORD: requiredString,
+  MYSQL_PASSWORD: z.string().trim().min(16),
   MYSQL_DATABASE: requiredString,
   MYSQL_HOST: requiredString,
   MYSQL_PORT: z.coerce.number().int().positive(),
+  TIMEZONE: requiredString,
 });
 
 export const validateEnvvars = () => {
@@ -52,6 +53,7 @@ export const validateEnvvars = () => {
     mysqlDatabase: env.MYSQL_DATABASE,
     mysqlHost: env.MYSQL_HOST,
     mysqlPort: env.MYSQL_PORT,
+    timezone: env.TIMEZONE,
   };
 };
 

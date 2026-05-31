@@ -1,4 +1,5 @@
 import http from 'http';
+import { initLogger, logger } from '@/utils/logger';
 
 let server: http.Server | null = null;
 let closeDatabase: (() => Promise<void>) | null = null;
@@ -32,26 +33,25 @@ const shutdown = async (reason: string, exitCode = 0): Promise<void> => {
   if (isShuttingDown) return;
   isShuttingDown = true;
 
-  console.log('- shutting down api server...', reason);
+  logger().info('- shutting down api server... %s', reason);
 
   try {
     await closeServer();
     await closeDatabase?.();
-    console.log('- api server shutdown complete');
+    logger().info('- api server shutdown complete');
     process.exit(exitCode);
   } catch (err) {
-    console.error('- api server shutdown failed');
-    console.error(err);
+    logger().error(err, '- api server shutdown failed');
     process.exit(1);
   }
 };
 
 const run = async () => {
-  const [{ default: app }, { default: envvars }, { connect }] = await Promise.all([
-    import('@/configs/app'),
-    import('@/configs/envvars'),
-    import('@/database/mysql'),
-  ]);
+  // envvars 먼저 로드 → logger 초기화 → 나머지 모듈 로드
+  const { default: envvars } = await import('@/configs/envvars');
+  initLogger({ isDev: envvars.env !== 'production' });
+
+  const [{ default: app }, { connect }] = await Promise.all([import('@/configs/app'), import('@/database/mysql')]);
 
   // database
   const sequelize = await connect();
@@ -60,7 +60,7 @@ const run = async () => {
   // web server
   server = http.createServer(app);
   await listen(server, envvars.serverPort);
-  console.log('- http server started...', envvars.serverUrl());
+  logger().info('- http server started... %s', envvars.serverUrl());
 };
 
 process.once('SIGINT', () => {
@@ -72,19 +72,16 @@ process.once('SIGTERM', () => {
 });
 
 process.on('unhandledRejection', (reason) => {
-  console.error('- unhandled promise rejection');
-  console.error(reason);
+  logger().error(reason, '- unhandled promise rejection');
   void shutdown('unhandledRejection', 1);
 });
 
 process.on('uncaughtException', (err) => {
-  console.error('- uncaught exception');
-  console.error(err);
+  logger().error(err, '- uncaught exception');
   void shutdown('uncaughtException', 1);
 });
 
 run().catch((err) => {
-  console.error('- failed to start api server');
-  console.error(err);
+  logger().error(err, '- failed to start api server');
   void shutdown('startup failure', 1);
 });
