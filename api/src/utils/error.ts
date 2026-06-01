@@ -23,7 +23,16 @@ export const handleNotFound = (req: Request, res: Response, next: NextFunction):
 
 export const handleReportError = (err: Error, req: Request, res: Response, next: NextFunction): void => {
   // report err to somewhere (slack)
-  logger().error(err, 'unhandled error');
+  logger().error(
+    {
+      name: err.name,
+      message: err.message,
+      statusCode: err instanceof HttpError ? err.statusCode : undefined,
+      method: req.method,
+      url: req.originalUrl,
+    },
+    'unhandled error',
+  );
   return next(err);
 };
 
