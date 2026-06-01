@@ -18,7 +18,7 @@ const envSchema = z.object({
 
   // mysql
   MYSQL_USERNAME: requiredString,
-  MYSQL_PASSWORD: z.string().trim().min(16),
+  MYSQL_PASSWORD: requiredString,
   MYSQL_DATABASE: requiredString,
   MYSQL_HOST: requiredString,
   MYSQL_PORT: z.coerce.number().int().positive(),
