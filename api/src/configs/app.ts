@@ -7,6 +7,7 @@ import envvars from '@/configs/envvars';
 import routes from '@/routes/v1';
 import { handleNotFound, handleRenderError, handleReportError } from '@/utils/error';
 import { getHttpLogger } from '@/utils/logger';
+import { csrfProtection } from '@/utils/middleware';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(compression());
 app.use(cors({ origin: [envvars.clientUrl()], credentials: true }));
+app.use(csrfProtection);
 app.set('trust proxy', 1);
 
 // router

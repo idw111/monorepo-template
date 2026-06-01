@@ -81,12 +81,11 @@ export const signupUser = async (
 };
 
 export const setTokenCookie = (res: Response, token: string): void => {
-  const httpOnly = envvars.env === 'production';
   const secure = envvars.env === 'production';
   res.cookie('token', token, {
     maxAge: getSeconds(envvars.jwtExpire) * 1000,
     secure,
-    httpOnly,
+    httpOnly: true,
     sameSite: 'lax',
     domain: envvars.domain,
   });

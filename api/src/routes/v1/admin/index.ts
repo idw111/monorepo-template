@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import users from '@/routes/admin/users';
+import users from '@/routes/v1/admin/users';
 import { validateRoles } from '@/utils/validators';
 
 const router = Router();
