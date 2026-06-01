@@ -3,8 +3,11 @@ import { getSequelize } from '@/database/mysql';
 import admin from '@/routes/v1/admin';
 import auth from '@/routes/v1/auth';
 import { parseJwt } from '@/services/auth';
+import { rateLimiter } from '@/utils/middleware';
 
 const router = Router();
+
+router.use(rateLimiter);
 
 router.get('/status', async (req, res) => {
   const sequelize = getSequelize();

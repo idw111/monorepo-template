@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { NextFunction, Request, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import envvars from '@/configs/envvars';
 import { throwHttpError } from '@/utils/error';
 
@@ -44,3 +45,31 @@ export const csrfProtection = (req: Request, res: Response, next: NextFunction):
 
   return next();
 };
+
+/**
+ * 요청 제한 미들웨어
+ *
+ * 흐름:
+ *  1. 요청이 들어오면 60초 동안 최대 60번의 요청만 허용한다.
+ *  2. 요청이 초과되면 429 상태 코드를 반환한다.
+ *  3. 요청이 초과되면 60초 후에 다시 요청할 수 있다.
+ */
+const rateLimitMessage = { statusCode: 429, type: 'RateLimit', message: 'Too many requests' };
+
+/** 일반 API용 — 분당 60회 */
+export const rateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitMessage,
+});
+
+/** 인증용 — 분당 10회 */
+export const authRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitMessage,
+});
