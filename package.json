@@ -15,7 +15,8 @@
     "format:check": "oxfmt --check api www shared",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:www\"",
     "dev:api": "npm run dev --workspace api",
-    "dev:www": "npm run dev --workspace www"
+    "dev:www": "npm run dev --workspace www",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
     "oxfmt": "^0.45.0"
   }
 }
