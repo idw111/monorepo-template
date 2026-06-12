@@ -13,6 +13,9 @@ A backend and a front-end apps sharing a root `node_modules` (hoisted via root `
 
 - `api/` — Express 5 + TypeScript REST API (runs on port 5001)
 - `www/` — Next.js 16 + React 19 + Tailwind CSS 4 frontend (runs on port 3001)
+- `shared/` — type-only package shared by both apps (`import type { ... } from 'shared'`). Never export runtime values from it — there is no build step, so value imports break the compiled api output.
+
+Git hooks (husky) live at the root `.husky/` and run `format:check`, `lint`, `typecheck` on pre-commit. CI (`.github/workflows/ci.yml`) runs format:check → lint → typecheck → test → build.
 
 ## Commands
 
@@ -25,6 +28,7 @@ npm start                        # node dist/index.js (requires .env)
 npm test                         # mocha src/**/*.test.ts
 npm test -- --grep "pattern"     # run a single test
 npm run lint                     # ESLint
+npm run typecheck                # tsc --noEmit (swc build does NOT type-check)
 npm run format                   # oxfmt write
 npm run format:check             # oxfmt check (used in CI)
 npm run script ./script/sync.ts  # runs arbitrary ts script with env loaded
@@ -38,6 +42,7 @@ npm run dev                       # Next.js dev server on port 3001
 npm run build                     # Build for production
 npm start                         # Start production server
 npm run lint                      # ESLint
+npm run typecheck                 # tsc --noEmit
 npm run format                    # oxfmt write
 npm run format:check              # oxfmt check (used in CI)
 ```
