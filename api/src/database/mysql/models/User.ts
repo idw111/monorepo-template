@@ -1,7 +1,8 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import type { UserRole } from 'shared';
 
-export const UserRoleValues = ['user', 'admin'] as const;
-export type UserRole = (typeof UserRoleValues)[number];
+export const UserRoleValues = ['user', 'admin'] as const satisfies readonly UserRole[];
+export type { UserRole };
 
 @Table({ tableName: 'users' })
 export class User extends Model {

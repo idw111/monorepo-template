@@ -1,11 +1,7 @@
+import type { AuthUser } from 'shared';
 import { apiClient } from '@/lib/api/client';
 
-export type SessionUser = {
-  email: string;
-  id: number;
-  nickname: string;
-  role: 'admin' | 'user';
-} | null;
+export type SessionUser = AuthUser | null;
 
 type CurrentUserResponse = {
   user: SessionUser;

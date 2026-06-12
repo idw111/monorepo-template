@@ -2,17 +2,13 @@ import { hash, verify } from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import type { StringValue } from 'ms';
+import type { AuthUser } from 'shared';
 import envvars from '@/configs/envvars';
 import { User, UserRole } from '@/database/mysql/models/User';
 import { HttpError } from '@/utils/error';
 import { getSeconds } from '@/utils/time';
 
-export interface AuthUser {
-  id: number;
-  email: string;
-  role: UserRole;
-  nickname: string;
-}
+export type { AuthUser };
 
 export const extractAuthUser = (user: User): AuthUser => {
   return {

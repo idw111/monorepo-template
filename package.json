@@ -2,6 +2,7 @@
   "name": "monorepo-template",
   "private": true,
   "workspaces": [
+    "shared",
     "api",
     "www"
   ],
@@ -10,8 +11,8 @@
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "format": "oxfmt --write api www",
-    "format:check": "oxfmt --check api www",
+    "format": "oxfmt --write api www shared",
+    "format:check": "oxfmt --check api www shared",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:www\"",
     "dev:api": "npm run dev --workspace api",
     "dev:www": "npm run dev --workspace www"
