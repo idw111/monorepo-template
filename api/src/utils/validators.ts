@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { check, ValidationChain, ValidationError, validationResult } from 'express-validator';
 import { UserRole } from '@/database/mysql/models/User';
-import { throwHttpError } from '@/utils/error';
+import { HttpError, throwHttpError } from '@/utils/error';
 
 export const validateAuth = (req: Request, res: Response, next: NextFunction): void => {
   if (!res.locals.user) throwHttpError('Not authenticated', 'Auth', 401);
@@ -11,8 +11,8 @@ export const validateAuth = (req: Request, res: Response, next: NextFunction): v
 export const validateRoles =
   (roles: UserRole[]) =>
   (req: Request, res: Response, next: NextFunction): void => {
-    if (!res.locals.user) throwHttpError('Not authenticated', 'Auth', 401);
-    if (!roles.includes(res.locals.user.role)) throwHttpError('Not authorized', 'Auth', 403);
+    if (!res.locals.user) throw new HttpError('Not authenticated', 'Auth', 401);
+    if (!roles.includes(res.locals.user.role)) throw new HttpError('Not authorized', 'Auth', 403);
     return next();
   };
 
@@ -33,17 +33,17 @@ export const validate = (...validations: ValidationChain[]) => {
   };
 };
 
-export const validateNumeric = (fields: string | string[]) => {
+export const validateNumeric = (fields: string | string[]): RequestHandler => {
   if (typeof fields === 'string') return validateNumeric([fields]);
   else return validate(...fields.map((field) => check(field).isNumeric().toInt()));
 };
 
-export const validateText = (fields: string | string[]) => {
+export const validateText = (fields: string | string[]): RequestHandler => {
   if (typeof fields === 'string') return validateText([fields]);
   else return validate(...fields.map((field) => check(field).exists({ checkFalsy: true }).isString()));
 };
 
-export const validateArray = (fields: string | string[]) => {
+export const validateArray = (fields: string | string[]): RequestHandler => {
   if (typeof fields === 'string') return validateArray([fields]);
   else
     return validate(

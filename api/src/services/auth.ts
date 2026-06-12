@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import ms from 'ms';
 import envvars from '@/configs/envvars';
 import { User, UserRole } from '@/database/mysql/models/User';
-import { throwHttpError } from '@/utils/error';
+import { HttpError } from '@/utils/error';
 import { getSeconds } from '@/utils/time';
 
 export interface AuthUser {
@@ -55,10 +55,10 @@ export const generateToken = (user: AuthUser): string =>
 
 export const authenticate = async (email: string, password: string): Promise<{ user: Partial<User>; token: string }> => {
   const user = await User.findOne({ where: { email } });
-  if (!user) throwHttpError('Invalid email or password', 'Auth', 401);
+  if (!user) throw new HttpError('Invalid email or password', 'Auth', 401);
 
   const isValidPassword = await validatePassword(password, user.password);
-  if (!isValidPassword) throwHttpError('Invalid email or password', 'Auth', 401);
+  if (!isValidPassword) throw new HttpError('Invalid email or password', 'Auth', 401);
 
   const token = generateToken(extractAuthUser(user));
   return { user: user.toJSON(), token };
@@ -71,7 +71,7 @@ export const signupUser = async (
   role: UserRole = 'user'
 ): Promise<{ user: Partial<User>; token: string }> => {
   const existing = await User.findOne({ where: { email } });
-  if (existing) throwHttpError('Invalid email', 'Auth', 401);
+  if (existing) throw new HttpError('Invalid email', 'Auth', 401);
 
   const hashed = await hashPassword(password);
   const user = await User.create({ email, password: hashed, nickname, role });

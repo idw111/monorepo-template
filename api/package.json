@@ -12,6 +12,7 @@
     "dev": "node --watch -r @swc-node/register -r dotenv/config --trace-warnings src/index.ts",
     "lint": "npm run eslint",
     "eslint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit",
     "format": "npm exec -- oxfmt --write src script eslint.config.js",
     "format:check": "npm exec -- oxfmt --check src script eslint.config.js",
     "prepare": "husky install",

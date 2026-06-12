@@ -4,7 +4,7 @@ import envvars from '@/configs/envvars';
 import { logger } from '@/utils/logger';
 import { loadModels } from '../loader';
 
-let sequelize: Sequelize = null;
+let sequelize: Sequelize | null = null;
 
 export const connect = async (): Promise<Sequelize> => {
   const models = await loadModels(path.join(__dirname, 'models'));
@@ -29,4 +29,7 @@ export const connect = async (): Promise<Sequelize> => {
   }
 };
 
-export const getSequelize = (): Sequelize => sequelize;
+export const getSequelize = (): Sequelize => {
+  if (!sequelize) throw new Error('Database is not connected');
+  return sequelize;
+};

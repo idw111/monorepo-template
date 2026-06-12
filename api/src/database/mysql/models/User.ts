@@ -6,19 +6,19 @@ export type UserRole = (typeof UserRoleValues)[number];
 @Table({ tableName: 'users' })
 export class User extends Model {
   @Column({ primaryKey: true, autoIncrement: true })
-  id: number;
+  id!: number;
 
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column
-  password: string;
+  password!: string;
 
   @Column
-  nickname: string;
+  nickname!: string;
 
   @Column({ type: DataType.ENUM, values: UserRoleValues })
-  role: UserRole;
+  role!: UserRole;
 
   toJSON() {
     const { password: _, ...json } = this.get({ plain: true });

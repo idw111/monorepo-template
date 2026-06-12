@@ -6,6 +6,7 @@
     "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "format": "npm exec -- oxfmt --write .",
     "format:check": "npm exec -- oxfmt --check ."
   },

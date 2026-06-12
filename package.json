@@ -8,6 +8,8 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
     "format": "oxfmt --write api www",
     "format:check": "oxfmt --check api www",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:www\"",
