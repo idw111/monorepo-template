@@ -1,7 +1,7 @@
 import { hash, verify } from 'argon2';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import ms from 'ms';
+import type { StringValue } from 'ms';
 import envvars from '@/configs/envvars';
 import { User, UserRole } from '@/database/mysql/models/User';
 import { HttpError } from '@/utils/error';
@@ -49,7 +49,7 @@ export const hashPassword = async (password: string): Promise<string> => {
 
 export const generateToken = (user: AuthUser): string =>
   jwt.sign(user, envvars.jwtSecret, {
-    expiresIn: envvars.jwtExpire as ms.StringValue,
+    expiresIn: envvars.jwtExpire as StringValue,
     issuer: envvars.jwtIssuer,
   });
 
