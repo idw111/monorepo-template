@@ -3,7 +3,7 @@ import { getSequelize } from '@/database/mysql';
 import admin from '@/routes/v1/admin';
 import auth from '@/routes/v1/auth';
 import { parseJwt } from '@/services/auth';
-import { rateLimiter } from '@/utils/middleware';
+import { authRateLimiter, rateLimiter } from '@/utils/middleware';
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get('/status', async (req, res) => {
   }
 });
 
-router.use('/auth', auth);
+router.use('/auth', authRateLimiter, auth);
 
 router.use(parseJwt);
 

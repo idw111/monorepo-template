@@ -59,7 +59,7 @@ const rateLimitMessage = { statusCode: 429, type: 'RateLimit', message: 'Too man
 /** 일반 API용 — 분당 60회 */
 export const rateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 60,
+  limit: 60,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: rateLimitMessage,
@@ -68,7 +68,7 @@ export const rateLimiter = rateLimit({
 /** 인증용 — 분당 10회 */
 export const authRateLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 10,
+  limit: 10,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: rateLimitMessage,
